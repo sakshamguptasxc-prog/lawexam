@@ -1,0 +1,1290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>⚖️ Corporate Law Exam Crammer — All Units</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #07080f;
+    --card: #0e1020;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8eaf6;
+    --muted: #6b7280;
+    --accent: #e8562a;
+    --accent2: #f5a623;
+    --green: #10b981;
+    --blue: #3b82f6;
+    --purple: #8b5cf6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    top: -50%; left: -50%;
+    width: 200%; height: 200%;
+    background: radial-gradient(ellipse at 20% 20%, rgba(232,86,42,0.07) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(16,185,129,0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 60% 10%, rgba(245,166,35,0.04) 0%, transparent 40%);
+    pointer-events: none; z-index: 0;
+  }
+
+  .wrap { position: relative; z-index: 1; }
+
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(7,8,15,0.93);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 20px;
+    display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;
+  }
+
+  .logo { font-family: 'Syne', sans-serif; font-size: 18px; font-weight: 900;
+    background: linear-gradient(90deg, #f97316, #fbbf24);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+  .logo-sub { font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 400; -webkit-text-fill-color: var(--muted); }
+
+  .unit-tabs { display: flex; gap: 5px; flex-wrap: wrap; }
+  .unit-tab {
+    padding: 6px 14px; border-radius: 99px; border: 1px solid var(--border);
+    cursor: pointer; font-size: 11px; font-weight: 700; font-family: 'DM Sans', sans-serif;
+    background: transparent; color: var(--muted); transition: all 0.2s;
+  }
+  .unit-tab:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .unit-tab.active { background: var(--accent); color: #fff; border-color: var(--accent); }
+
+  .sub-tabs { display: flex; gap: 5px; flex-wrap: wrap; padding: 8px 20px; border-bottom: 1px solid var(--border); background: rgba(7,8,15,0.7); }
+  .tab {
+    padding: 5px 14px; border-radius: 99px; border: 1px solid var(--border);
+    cursor: pointer; font-size: 11px; font-weight: 600; font-family: 'DM Sans', sans-serif;
+    background: transparent; color: var(--muted); transition: all 0.2s;
+  }
+  .tab:hover { color: var(--text); border-color: rgba(255,255,255,0.2); }
+  .tab.active { background: rgba(232,86,42,0.25); color: #fb923c; border-color: rgba(232,86,42,0.4); }
+
+  main { padding: 24px 20px; max-width: 900px; margin: 0 auto; }
+
+  .unit-section { display: none; }
+  .unit-section.active { display: block; }
+
+  .section { display: none; }
+  .section.active { display: block; animation: fadeUp 0.3s ease; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .topic-card {
+    background: var(--card); border: 1px solid var(--border);
+    border-radius: 16px; margin-bottom: 10px; overflow: hidden; transition: border-color 0.2s;
+  }
+  .topic-card:hover { border-color: rgba(255,255,255,0.14); }
+
+  .topic-header {
+    display: flex; align-items: center; gap: 12px;
+    padding: 14px 18px; cursor: pointer; user-select: none;
+  }
+  .topic-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .topic-title { font-family: 'Syne', sans-serif; font-size: 14px; font-weight: 700; flex: 1; }
+  .topic-tag { font-size: 10px; font-weight: 600; padding: 3px 9px; border-radius: 99px; background: rgba(255,255,255,0.07); color: var(--muted); }
+  .topic-chevron { color: var(--muted); font-size: 13px; transition: transform 0.25s; }
+  .topic-card.open .topic-chevron { transform: rotate(180deg); }
+  .topic-body { display: none; padding: 0 18px 18px; border-top: 1px solid var(--border); }
+  .topic-card.open .topic-body { display: block; animation: fadeUp 0.2s ease; }
+
+  .def-box {
+    margin: 12px 0 10px; padding: 10px 14px; border-radius: 10px;
+    font-size: 12.5px; line-height: 1.65; border-left: 3px solid;
+  }
+
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; margin: 11px 0; }
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 9px; margin: 11px 0; }
+  @media (max-width: 600px) { .grid2, .grid3 { grid-template-columns: 1fr; } }
+
+  .pill {
+    padding: 10px 13px; border-radius: 10px;
+    background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+    font-size: 12px; line-height: 1.55;
+  }
+  .pill strong { display: block; font-size: 11px; font-weight: 700; margin-bottom: 4px; opacity: 0.7; text-transform: uppercase; letter-spacing: 0.5px; }
+
+  .points { list-style: none; margin: 9px 0; }
+  .points li {
+    padding: 5px 0; font-size: 13px; border-bottom: 1px solid var(--border); display: flex; gap: 8px;
+  }
+  .points li:last-child { border: none; }
+  .points li::before { content: '▸'; color: var(--accent2); flex-shrink: 0; margin-top: 1px; }
+
+  .case-tag {
+    display: inline-block;
+    background: rgba(59,130,246,0.12); color: #60a5fa;
+    border: 1px solid rgba(59,130,246,0.25);
+    padding: 3px 9px; border-radius: 6px; font-size: 11px; margin: 3px 3px 3px 0; font-weight: 600; font-style: italic;
+  }
+
+  .tip-box {
+    margin-top: 12px; padding: 9px 13px;
+    background: rgba(232,86,42,0.1); border: 1px solid rgba(232,86,42,0.25);
+    border-radius: 10px; font-size: 12px; color: #fb923c; font-weight: 500;
+  }
+  .tip-box::before { content: '💡 EXAM TIP: '; font-weight: 700; }
+
+  .amend-box {
+    margin-top: 10px; padding: 9px 13px;
+    background: rgba(139,92,246,0.1); border: 1px solid rgba(139,92,246,0.25);
+    border-radius: 10px; font-size: 12px; color: #c4b5fd; font-weight: 500;
+  }
+  .amend-box::before { content: '📋 AMENDMENT: '; font-weight: 700; }
+
+  .vs-box { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; margin: 11px 0; align-items: start; }
+  .vs-col { padding: 12px 13px; border-radius: 10px; font-size: 12px; line-height: 1.7; }
+  .vs-col strong { display: block; font-size: 13px; font-weight: 800; margin-bottom: 6px; }
+  .vs-mid { display: flex; align-items: center; justify-content: center; font-size: 18px; padding-top: 14px; color: var(--muted); }
+
+  /* PYQ Section */
+  .pyq-section {
+    margin-top: 12px; padding: 13px 14px;
+    background: rgba(245,166,35,0.08); border: 1px solid rgba(245,166,35,0.28);
+    border-radius: 12px;
+  }
+  .pyq-header {
+    font-family: 'Syne', sans-serif; font-size: 12px; font-weight: 800;
+    color: #fbbf24; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .pyq-item {
+    display: flex; align-items: flex-start; gap: 8px;
+    padding: 6px 0; font-size: 12px; border-bottom: 1px solid rgba(245,166,35,0.12); line-height: 1.5;
+  }
+  .pyq-item:last-child { border: none; }
+  .pyq-star { color: #fbbf24; flex-shrink: 0; font-size: 13px; }
+  .pyq-marks { 
+    display: inline-flex; align-items: center; justify-content: center;
+    background: rgba(245,166,35,0.2); color: #fbbf24; border-radius: 4px;
+    font-size: 10px; font-weight: 700; padding: 1px 5px; flex-shrink: 0; margin-top: 2px;
+  }
+  .pyq-marks.high { background: rgba(239,68,68,0.2); color: #f87171; }
+  .pyq-marks.med { background: rgba(245,166,35,0.2); color: #fbbf24; }
+  .pyq-marks.low { background: rgba(107,114,128,0.2); color: #9ca3af; }
+
+  /* section heading */
+  .sec-heading {
+    font-family: 'Syne', sans-serif; font-size: 11px; font-weight: 800;
+    letter-spacing: 1.2px; text-transform: uppercase; color: var(--muted);
+    padding: 16px 0 8px; margin-bottom: 4px;
+  }
+
+  .stat-row { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+  .stat-chip {
+    padding: 6px 12px; border-radius: 8px; font-size: 12px; font-weight: 600;
+    background: rgba(255,255,255,0.05); border: 1px solid var(--border);
+  }
+  .stat-chip span { opacity: 0.6; margin-right: 4px; font-size: 11px; }
+
+  p.desc { font-size: 13px; line-height: 1.7; margin: 10px 0; color: #c9cdd8; }
+
+  .section-label {
+    display: inline-block; font-size: 10px; font-weight: 700;
+    padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header>
+  <div>
+    <div class="logo">⚖️ Corporate Law Crammer</div>
+    <div class="logo-sub">Companies Act 2013 · IBC 2016 · St. Xavier's College, Kolkata — Sem IV</div>
+  </div>
+  <div class="unit-tabs">
+    <button class="unit-tab active" onclick="switchUnit('u1',this)">Unit 1</button>
+    <button class="unit-tab" onclick="switchUnit('u2',this)">Unit 2</button>
+    <button class="unit-tab" onclick="switchUnit('u3',this)">Unit 3</button>
+    <button class="unit-tab" onclick="switchUnit('u4',this)">Unit 4</button>
+    <button class="unit-tab" onclick="switchUnit('u5',this)">Unit 5</button>
+    <button class="unit-tab" onclick="switchUnit('u6',this)">Unit 6</button>
+  </div>
+</header>
+
+<!-- ===== UNIT 1 ===== -->
+<div id="u1" class="unit-section active">
+  <div class="sub-tabs">
+    <button class="tab active" onclick="switchTab('u1','notes',this)">📖 Notes</button>
+    <button class="tab" onclick="switchTab('u1','pyqs',this)">⭐ PYQs</button>
+  </div>
+  <main>
+
+    <!-- NOTES -->
+    <div id="u1-notes" class="section active">
+      <div class="sec-heading">Unit 1 — Introduction to Company Law</div>
+
+      <!-- Meaning of Company -->
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#e8562a"></div>
+          <div class="topic-title">Meaning & Definition of a Company</div>
+          <div class="topic-tag">Sec 2(20)</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="def-box" style="border-color:#e8562a; background:rgba(232,86,42,0.07)">
+            <strong>Lord Macnaghten (Salomon v. Salomon, 1897):</strong> "A company is an abstract person; it is a legal person created by law, clothed in law and carrying on activities through law."
+          </div>
+          <div class="def-box" style="border-color:#3b82f6; background:rgba(59,130,246,0.07)">
+            <strong>Sec 2(20) Companies Act 2013:</strong> "Company means a company incorporated under this Act or under any previous company law."
+          </div>
+          <p class="desc">A company is a voluntary association of persons formed for a lawful purpose. It has a legal personality separate from its members and is capable of owning property, entering contracts, and suing/being sued in its own name.</p>
+          <div class="sec-heading" style="font-size:10px">Characteristics of a Company</div>
+          <ul class="points">
+            <li>Separate Legal Entity — distinct from members (Salomon v. Salomon)</li>
+            <li>Limited Liability — members' liability limited to unpaid share capital</li>
+            <li>Perpetual Succession — members may change; company continues</li>
+            <li>Common Seal — official signature of the company (now optional post-2015)</li>
+            <li>Transferability of Shares — freely transferable in public companies</li>
+            <li>Separate Property — company owns its own assets (Macaura v. Northern Assurance)</li>
+            <li>Capacity to Sue and Be Sued</li>
+            <li>Artificial Legal Person — not a natural person; cannot be a citizen of India (State Trading Corp. case)</li>
+          </ul>
+          <div class="tip-box">A company is NOT a citizen (State Trading Corp. v. CTO 1963), so it cannot claim fundamental rights under Art. 19. But it CAN claim rights under Art. 14 (equality).</div>
+          <div class="case-tag">Salomon v. Salomon & Co. [1897]</div>
+          <div class="case-tag">Macaura v. Northern Assurance [1925]</div>
+          <div class="case-tag">State Trading Corp. v. CTO [1963]</div>
+        </div>
+      </div>
+
+      <!-- Types of Companies -->
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#f59e0b"></div>
+          <div class="topic-title">Types of Companies</div>
+          <div class="topic-tag">OPC · Small · Associate · Dormant</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="grid2">
+            <div class="pill">
+              <strong>One Person Company (OPC) — Sec 2(62)</strong>
+              Has only one member who is a natural Indian resident. Must nominate a person who becomes member if original member dies/incapacitated. No minimum paid-up capital. Cannot convert to Sec 8 company. Cannot carry out Non-Banking Financial Investment activities.
+            </div>
+            <div class="pill">
+              <strong>Small Company — Sec 2(85)</strong>
+              Paid-up capital ≤ ₹4 Cr (not exceeding ₹10 Cr); OR turnover ≤ ₹40 Cr (not exceeding ₹100 Cr). Excludes holding/subsidiary, Sec 8, or companies under special Acts. Benefits: No cash flow statement, abridged annual return, only 2 board meetings/year.
+            </div>
+            <div class="pill">
+              <strong>Associate Company — Sec 2(6)</strong>
+              Company in which another company has significant influence (at least 20% of total voting power OR control under agreement) but is NOT a subsidiary. Includes Joint Ventures.
+            </div>
+            <div class="pill">
+              <strong>Dormant Company — Sec 455</strong>
+              Company formed for future project or to hold asset/intellectual property; no significant accounting transactions for 2 consecutive years. Can apply to ROC for dormant status. Minimum 3 directors; must file annual return. Allowed to remain dormant for max 5 years.
+            </div>
+            <div class="pill">
+              <strong>Section 8 Company (Assoc. Not for Profit)</strong>
+              Promotes arts, science, commerce, education, religion, charity, social welfare, sports, environment. Profits applied only for objects. Cannot pay dividends. E.g., FICCI, CII.
+            </div>
+            <div class="pill">
+              <strong>Illegal Association — Sec 464</strong>
+              Association of &gt;50 persons formed for profit without registering = Illegal Association. Every member personally liable for all debts; liable to fine of ₹1 lakh. Cannot sue others but can be sued.
+            </div>
+          </div>
+          <div class="tip-box">OPC cannot be converted to Sec 8 Company and cannot carry on NBFI activities. For Illegal Association, &gt;50 persons for profit without registration = illegal.</div>
+        </div>
+      </div>
+
+      <!-- Lifting Corporate Veil -->
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#8b5cf6"></div>
+          <div class="topic-title">Lifting of Corporate Veil</div>
+          <div class="topic-tag">Judicial + Statutory</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <p class="desc">The corporate veil is the legal shield that separates the company from its members. Courts and statutes can "pierce" this veil in certain situations to hold members personally liable.</p>
+          <div class="vs-box">
+            <div class="vs-col" style="background:rgba(232,86,42,0.07); border:1px solid rgba(232,86,42,0.15)">
+              <strong style="color:#fb923c">Judicial Grounds</strong>
+              1. Fraud or Improper Conduct — <em>Gilford Motor Co. v. Horne</em><br>
+              2. Tax Evasion — <em>Bacha F. Guzdar v. CIT; Vodafone case</em><br>
+              3. Agency — Parent liable for agent-subsidiary acts — <em>Smith Stone & Knight v. Birmingham</em><br>
+              4. Enemy Character — war-time determination — <em>Daimler Co. v. Continental Tyre</em><br>
+              5. Sham/Façade — used as a device to evade legal obligations
+            </div>
+            <div class="vs-mid">⚖️</div>
+            <div class="vs-col" style="background:rgba(59,130,246,0.07); border:1px solid rgba(59,130,246,0.15)">
+              <strong style="color:#60a5fa">Statutory Grounds</strong>
+              1. Reduction below min. members (Sec 3A)<br>
+              2. Fraudulent trading (Sec 339)<br>
+              3. Misrepresentation in prospectus (Sec 35)<br>
+              4. Holding-Subsidiary relationship<br>
+              5. Failure to return app money (Sec 39)<br>
+              6. Ultra Vires acts of directors
+            </div>
+          </div>
+          <div class="tip-box">Salomon principle = Separate Legal Entity. Lifting the veil = an EXCEPTION to Salomon. Always mention which ground applies to the fact scenario.</div>
+        </div>
+      </div>
+
+      <!-- Promoters & Pre-Incorporation -->
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#10b981"></div>
+          <div class="topic-title">Promoters & Pre-Incorporation Contracts</div>
+          <div class="topic-tag">Legal Position · Liability</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="def-box" style="border-color:#10b981; background:rgba(16,185,129,0.07)">
+            <strong>Promoter (Sec 2(69)):</strong> A person who has been named as such in a prospectus OR who has control over the affairs of the company, directly or indirectly, whether as a shareholder, director or otherwise.
+          </div>
+          <div class="grid2">
+            <div class="pill">
+              <strong>Legal Position of Promoter</strong>
+              Not a trustee, not an agent (company doesn't exist yet). Stands in a fiduciary position — must not make secret profits. Must disclose all material facts. Cases: <em>Erlanger v. New Sombrero Phosphate Co.</em>
+            </div>
+            <div class="pill">
+              <strong>Pre-Incorporation Contracts</strong>
+              Contracts made BEFORE company is incorporated. Company cannot ratify pre-incorporation contracts — it didn't exist. Promoters remain personally liable UNLESS company enters a fresh contract (novation). <em>Kelner v. Baxter (1866)</em>
+            </div>
+          </div>
+          <div class="tip-box">KEY: Company CANNOT ratify pre-incorporation contracts. Only a fresh contract (novation/substituted contract) relieves promoters. Remember Kelner v. Baxter.</div>
+          <div class="case-tag">Kelner v. Baxter [1866]</div>
+          <div class="case-tag">Erlanger v. New Sombrero Phosphate [1878]</div>
+        </div>
+      </div>
+
+      <!-- Formation & SPICE+ -->
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#3b82f6"></div>
+          <div class="topic-title">Formation & Registration of a Company (SPICE+ INC-32)</div>
+          <div class="topic-tag">Incorporation Process</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <ul class="points">
+            <li>Submit web-based SPICE+ INC-32 form in two parts (Simplified Proforma for Incorporating Companies Electronically)</li>
+            <li>Part A: Name Reservation — max 2 names, fee ₹1000, valid for 20 days</li>
+            <li>Part B: Incorporation + PAN + TAN + max 3 DINs. Attach eMOA (INC-33), eAOA (INC-34) if ≤7 subscribers</li>
+            <li>Attach AGILE Pro (INC-35) for GSTIN, EPFO, ESIC, Professional Tax, Bank A/c</li>
+            <li>Attach INC-8 (declaration by CA/CS/CMA) and INC-9 (declaration by subscribers/first directors)</li>
+            <li>CRC issues Certificate of Incorporation (COI) in Form INC-11 within 1 working day if all docs in order</li>
+            <li>COI contains: Company Name, CIN, Date of Incorporation, PAN, TAN</li>
+            <li>File INC-32 within 30 days of incorporation to inform ROC of registered office address</li>
+          </ul>
+          <div class="stat-row">
+            <div class="stat-chip"><span>Min. Capital</span>NIL (up to ₹15L auth. capital)</div>
+            <div class="stat-chip"><span>Name Valid</span>20 days</div>
+            <div class="stat-chip"><span>COI issued in</span>1 working day</div>
+          </div>
+          <div class="tip-box">RUN (Reserve Unique Name) still exists for name change of EXISTING companies — valid 60 days. SPICE+ is for new company name reservations only.</div>
+        </div>
+      </div>
+
+      <!-- NCLT & NCLAT -->
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#f59e0b"></div>
+          <div class="topic-title">NCLT & NCLAT — Administration of Company Law</div>
+          <div class="topic-tag">Sec 407–434</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="grid2">
+            <div class="pill">
+              <strong>NCLT — National Company Law Tribunal</strong>
+              Constituted under Sec 408, effective 1 June 2016. Quasi-judicial body. Has 11 benches (1 Principal at New Delhi + 10 Regional: Ahmedabad, Allahabad, Bengaluru, Chandigarh, Chennai, Guwahati, Hyderabad, Kolkata, Mumbai). Replaced Company Law Board, BIFR, AAIFR.
+            </div>
+            <div class="pill">
+              <strong>NCLAT — National Company Law Appellate Tribunal</strong>
+              Hears appeals from NCLT orders. Also hears appeals from orders of CCI (Competition Commission of India). Further appeal lies to Supreme Court of India.
+            </div>
+          </div>
+          <div class="tip-box">NCLT consolidates jurisdiction of: Company Law Board + Board for Industrial & Financial Reconstruction (BIFR) + Appellate Authority for Industrial & Financial Reconstruction (AAIFR) + High Court jurisdiction related to winding up.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PYQS -->
+    <div id="u1-pyqs" class="section">
+      <div class="sec-heading">Unit 1 — Past Year Questions (with marks weightage)</div>
+      <div class="topic-card open">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#fbbf24"></div>
+          <div class="topic-title">⭐ Most Important Questions — Unit 1</div>
+          <div class="topic-tag">PYQs</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="pyq-section">
+            <div class="pyq-header">⭐ PYQ Bank — Unit 1: Introduction</div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3–4M</div><div>Explain the concept of a One Person Company (OPC) and highlight its key characteristics under the Companies Act, 2013.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3–4M</div><div>Discuss the specific circumstances under which the corporate veil of a company may be lifted by the courts. Include <em>Salomon v. Salomon & Co. Ltd.</em></div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2–4M</div><div>What is an 'illegal association'? Briefly state the legal consequences of forming one. (Case: association of 60 people starts business without registering.)</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2–4M</div><div>Define a Promoter. Discuss their legal position and liability regarding pre-incorporation contracts.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2M</div><div>Write a short note on "Association not for profit" (Section 8 Company) and rules regarding profit distribution.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2M</div><div>Outline the legal formalities and key steps required regarding the formation and registration of a company.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>"A company is a body corporate but all body corporates are not companies." Explain.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Is a company considered a citizen? Explain with reference to relevant case law.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Discuss the landmark case of <em>Macaura v. Northern Assurance Co.</em> and insurable interest.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Write a short note on a 'Dormant Company'.</div></div>
+          </div>
+          <div class="pyq-section" style="margin-top:10px; background:rgba(59,130,246,0.07); border-color:rgba(59,130,246,0.25)">
+            <div class="pyq-header" style="color:#60a5fa">📋 Case Study Questions</div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#60a5fa">★</div><div class="pyq-marks" style="background:rgba(59,130,246,0.2);color:#60a5fa">CS</div><div><strong>Sec 8 Case:</strong> XYZ Welfare Foundation (Sec 8 company) received a large donation. Can it distribute part as bonuses to directors/members?</div></div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#60a5fa">★</div><div class="pyq-marks" style="background:rgba(59,130,246,0.2);color:#60a5fa">CS</div><div><strong>Illegal Association:</strong> 60 people start business without registering. Discuss legal validity and consequences of liability.</div></div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#60a5fa">★</div><div class="pyq-marks" style="background:rgba(59,130,246,0.2);color:#60a5fa">CS</div><div><strong>Common Seal:</strong> ABC Ltd. opted not to use a common seal. A director signed a contract without it — is the contract valid under current law?</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ===== UNIT 2 ===== -->
+<div id="u2" class="unit-section">
+  <div class="sub-tabs">
+    <button class="tab active" onclick="switchTab('u2','notes',this)">📖 Notes</button>
+    <button class="tab" onclick="switchTab('u2','pyqs',this)">⭐ PYQs</button>
+  </div>
+  <main>
+    <div id="u2-notes" class="section active">
+      <div class="sec-heading">Unit 2 — Documents</div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#e8562a"></div>
+          <div class="topic-title">Memorandum of Association (MOA)</div>
+          <div class="topic-tag">Charter Document</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <p class="desc">The MOA is the charter/constitution of the company. It defines the company's scope and limits. Sec 2(56): "Memorandum means the memorandum of association of a company as originally framed or as altered from time to time in pursuance of any previous company law or this Act."</p>
+          <div class="grid2">
+            <div class="pill">
+              <strong>Clauses of MOA</strong>
+              1. Name Clause<br>2. Registered Office/Situation Clause<br>3. Object Clause (main + ancillary objects)<br>4. Liability Clause (limited by shares/guarantee)<br>5. Capital Clause (authorised share capital)<br>6. Subscription/Association Clause
+            </div>
+            <div class="pill">
+              <strong>Alteration of MOA</strong>
+              Name Clause: Central Govt approval + SR<br>
+              Registered Office: within same RoC — Board; same state — SR; different state — CLT + SR<br>
+              Object Clause: Special Resolution<br>
+              Liability Clause: members' consent in writing<br>
+              Capital Clause: Ordinary Resolution
+            </div>
+          </div>
+          <div class="tip-box">MOA prevails over AOA in case of conflict. AOA prevails over neither the Act nor the MOA.</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#10b981"></div>
+          <div class="topic-title">Articles of Association (AOA)</div>
+          <div class="topic-tag">Internal Regulations</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <p class="desc">AOA contains the rules and regulations for internal management of the company. Every company except public unlimited company MUST have AOA. Default: Table F (public company limited by shares).</p>
+          <ul class="points">
+            <li>AOA is subordinate to both MOA and the Companies Act</li>
+            <li>Can be altered by Special Resolution — alteration must be bona fide for benefit of company as a whole</li>
+            <li>Cannot contain provisions inconsistent with the Companies Act</li>
+            <li>Alteration cannot force members to take more shares or increase liability without written consent</li>
+          </ul>
+          <div class="case-tag">Allen v. Gold Reefs of West Africa [1900]</div>
+          <div class="case-tag">Greenhalgh v. Arderne Cinemas [1951]</div>
+          <div class="tip-box">In conflict between MOA and AOA — MOA prevails. In conflict between AOA and Act — Act prevails. Hierarchy: Act > MOA > AOA.</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#8b5cf6"></div>
+          <div class="topic-title">Doctrine of Ultra Vires</div>
+          <div class="topic-tag">Beyond Powers</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="def-box" style="border-color:#8b5cf6; background:rgba(139,92,246,0.07)">
+            An act is <strong>ultra vires</strong> if it is beyond the legal powers/authority of the company as defined in the MOA. Such acts are void, cannot be ratified even by unanimous consent of ALL shareholders.
+          </div>
+          <div class="grid2">
+            <div class="pill">
+              <strong>Effects of Ultra Vires Transaction</strong>
+              • Void and unenforceable<br>
+              • Cannot be ratified<br>
+              • Directors personally liable<br>
+              • Injunction can be obtained<br>
+              • Property: if traceable, can be recovered
+            </div>
+            <div class="pill">
+              <strong>Intra Vires vs Ultra Vires</strong>
+              Intra vires = within powers (valid)<br>
+              Ultra vires company = void, even if shareholders unanimously ratify<br>
+              Ultra vires directors (but intra vires company) = CAN be ratified by shareholders
+            </div>
+          </div>
+          <div class="case-tag">Ashbury Railway Carriage Co. v. Riche [1875]</div>
+          <div class="tip-box">Ultra vires the COMPANY = cannot be ratified. Ultra vires the DIRECTORS (but within company powers) = CAN be ratified. This distinction is crucial in exam problems.</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#3b82f6"></div>
+          <div class="topic-title">Doctrine of Constructive Notice & Indoor Management</div>
+          <div class="topic-tag">Most Important — Unit 2</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="vs-box">
+            <div class="vs-col" style="background:rgba(232,86,42,0.07); border:1px solid rgba(232,86,42,0.15)">
+              <strong style="color:#fb923c">Constructive Notice</strong>
+              MOA & AOA are public documents registered with ROC. Every outsider dealing with company is deemed to have notice of their contents. Cannot claim ignorance. Protects the COMPANY against outsiders.
+            </div>
+            <div class="vs-mid">⚡</div>
+            <div class="vs-col" style="background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.15)">
+              <strong style="color:#34d399">Indoor Management (Turquand's Rule)</strong>
+              An outsider acting in good faith may ASSUME that internal requirements of the company (as permitted by MOA/AOA) have been duly complied with. Protects OUTSIDERS from the company. Also called "Turquand's Rule."
+              <div class="case-tag" style="margin-top:6px">Royal British Bank v. Turquand [1856]</div>
+            </div>
+          </div>
+          <div class="sec-heading" style="font-size:10px">Exceptions to Indoor Management (where it does NOT protect outsiders)</div>
+          <ul class="points">
+            <li>Knowledge of irregularity — outsider knows of internal irregularity</li>
+            <li>Suspicion of irregularity — circumstances arouse suspicion</li>
+            <li>Forgery — document is forged; cannot be ratified</li>
+            <li>Outsider is an insider — director or officer of the company</li>
+            <li>Act is ultra vires the company itself</li>
+          </ul>
+          <div class="tip-box">Constructive Notice: Protects COMPANY. Indoor Management: Protects OUTSIDER. They are exceptions to each other!</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#f59e0b"></div>
+          <div class="topic-title">Prospectus — Types, Misstatement & Liabilities</div>
+          <div class="topic-tag">Sec 2(70) · Sec 34–38</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="def-box" style="border-color:#f59e0b; background:rgba(245,158,11,0.07)">
+            <strong>Sec 2(70):</strong> Any document described/issued as prospectus; any notice/circular/advertisement inviting (1) subscriptions for shares/debentures AND (2) made to public at large.
+          </div>
+          <div class="grid3">
+            <div class="pill">
+              <strong>Shelf Prospectus</strong>
+              For financial institutions; valid for 1 year from first offer. No need to file prospectus for each subsequent offer within that period.
+            </div>
+            <div class="pill">
+              <strong>Red Herring Prospectus</strong>
+              Filed before price fixation. Does not have complete particulars of price/quantum. Price filled in later.
+            </div>
+            <div class="pill">
+              <strong>Abridged Prospectus</strong>
+              Shortened version accompanying application form. Must contain all material info.
+            </div>
+          </div>
+          <div class="sec-heading" style="font-size:10px">Misstatement in Prospectus (Sec 34–38)</div>
+          <p class="desc">Misstatement = untrue statement + suppression of material facts + omission of material facts. "Half a truth is no better than a downright falsehood." — Rex v. Kylsant</p>
+          <div class="grid2">
+            <div class="pill">
+              <strong>Guilty Persons (Sec 35)</strong>
+              1. Directors<br>2. Proposed Directors (named in prospectus)<br>3. Promoters<br>4. Authoriser of prospectus<br>5. Experts (who consented)
+            </div>
+            <div class="pill">
+              <strong>Civil Liability (Sec 35)</strong>
+              Aggrieved allottee can claim compensation. Director NOT liable if: (a) withdrew consent before issue, (b) issued without knowledge, (c) gave public notice after becoming aware. Amendment 2017: Relief if relied on expert's misleading statement in good faith.
+            </div>
+          </div>
+          <div class="tip-box">Criminal Liability (Sec 34): Fine not less than fraud amount, extendable to 3× + imprisonment 6 months to 10 years. Public Offer: Must be made to &gt;200 persons to be "public at large" (now: any identified persons exceeding limit = public offer).</div>
+          <div class="case-tag">Rex v. Kylsant</div>
+          <div class="case-tag">Nash v. Lynde (private communication ≠ public)</div>
+          <div class="amend-box">Companies Amendment Act 2017: Private Placement (Sec 42) — offer to ≤50 identified persons per financial year (excl. QIBs and ESOP employees). Failure to file return of allotment within 15 days → ₹1000/day penalty, max ₹25 lakhs.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="u2-pyqs" class="section">
+      <div class="sec-heading">Unit 2 — Past Year Questions</div>
+      <div class="topic-card open">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#fbbf24"></div>
+          <div class="topic-title">⭐ Most Important Questions — Unit 2</div>
+          <div class="topic-tag">PYQs</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="pyq-section">
+            <div class="pyq-header">⭐ PYQ Bank — Unit 2: Documents</div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">4M</div><div>Critically analyze the Doctrine of Constructive Notice and its exception — the Doctrine of Indoor Management. Include <em>Royal British Bank v. Turquand.</em></div></div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3M</div><div>Briefly explain the object of registering a MOA and highlight its key contents/components.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3M</div><div>Discuss the effects of an ultra vires transaction. Can it be ratified by shareholders?</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3M</div><div>Who can be held liable for a misstatement in a prospectus? Briefly discuss civil and criminal liabilities.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2M</div><div>Discuss the limits upon the powers of a company to alter its Articles of Association. Can AOA contain provisions inconsistent with the Act?</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>In case of a conflict between the MOA and AOA, whose provisions shall prevail and why?</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Discuss the provisions relating to the alteration of the registered office clause of the MOA.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>How can a company legally alter its Object Clause?</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Define a Private Company and state differences between a private and public company.</div></div>
+          </div>
+          <div class="pyq-section" style="margin-top:10px; background:rgba(59,130,246,0.07); border-color:rgba(59,130,246,0.25)">
+            <div class="pyq-header" style="color:#60a5fa">📋 Case Study Questions</div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#60a5fa">★★</div><div class="pyq-marks" style="background:rgba(59,130,246,0.2);color:#60a5fa">CS</div><div><strong>Pre-incorporation:</strong> Promoters signed agreement to purchase furniture before incorporation. Company used furniture but went into liquidation before paying. Are promoters liable if (a) company accepted contract without communicating it, or (b) company made fresh substituted contract?</div></div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#60a5fa">★★</div><div class="pyq-marks" style="background:rgba(59,130,246,0.2);color:#60a5fa">CS</div><div><strong>Ultra Vires:</strong> (a) Directors buying luxury cars for personal use using company funds. (b) Eco-building company sets up cement plant to supply own projects (not in MOA). Ultra vires?</div></div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#60a5fa">★★</div><div class="pyq-marks" style="background:rgba(59,130,246,0.2);color:#60a5fa">CS</div><div><strong>Indoor Management:</strong> Company lent money on mortgage but internal procedures not complied with. Directors of both companies were same — is mortgage binding?</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===== UNIT 3 ===== -->
+<div id="u3" class="unit-section">
+  <div class="sub-tabs">
+    <button class="tab active" onclick="switchTab('u3','notes',this)">📖 Notes</button>
+    <button class="tab" onclick="switchTab('u3','pyqs',this)">⭐ PYQs</button>
+  </div>
+  <main>
+    <div id="u3-notes" class="section active">
+      <div class="sec-heading">Unit 3 — Management: Directors, Meetings & Committees</div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#e8562a"></div>
+          <div class="topic-title">Classification & Types of Directors</div>
+          <div class="topic-tag">Sec 149–165</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="stat-row">
+            <div class="stat-chip"><span>Min Directors</span>OPC: 1 | Pvt: 2 | Public: 3</div>
+            <div class="stat-chip"><span>Max Directors</span>15 (SR needed to exceed)</div>
+            <div class="stat-chip"><span>Max Directorships</span>20 companies (max 10 public)</div>
+          </div>
+          <div class="grid2">
+            <div class="pill">
+              <strong>Independent Director (Sec 149(4))</strong>
+              ≥1/3 of total directors to be Independent. Must: be a person of integrity, not a promoter/related to promoter, no pecuniary relationship with company in preceding 2 years, not KMP in preceding 3 years. Max tenure: 2 consecutive terms of 5 years each. Cool-off: 3 years before re-appointment.
+            </div>
+            <div class="pill">
+              <strong>Additional Director (Sec 161(1))</strong>
+              Appointed by Board per AOA. Holds office till next AGM. Cannot be someone who failed to get elected at GM. Must collect DIN, consent DIR-2, interest disclosure MBP-1.
+            </div>
+            <div class="pill">
+              <strong>Alternate Director (Sec 161(2))</strong>
+              Appointed by Board (if authorized by AOA or SR). Represents absent director (absent &gt;3 months from India). Vacates office when original director returns. Cannot act after original director's term ends.
+            </div>
+            <div class="pill">
+              <strong>Casual Vacancy (Sec 161(4))</strong>
+              Only Public companies (or private subsidiary of public) can fill by Board resolution. Private companies must fill at General Meeting. Acts till remaining tenure of replaced director. Amendment 2017: all companies including private may fill by Board, to be approved at next GM.
+            </div>
+          </div>
+          <div class="grid2" style="margin-top:8px">
+            <div class="pill">
+              <strong>Women Director (Sec 149(1))</strong>
+              Mandatory for: (a) every listed company, (b) public company with paid-up capital ≥₹100 Cr or turnover ≥₹300 Cr. At least one woman director.
+            </div>
+            <div class="pill">
+              <strong>Small Shareholders' Director (Sec 151)</strong>
+              Listed company may elect one. Small shareholder = nominal value ≤ ₹20,000. Requires notice from ≥1000 small shareholders or 1/10th of total. Tenure: 3 consecutive years. Not eligible for reappointment. Max 2 companies simultaneously.
+            </div>
+          </div>
+          <div class="tip-box">Amendment 2017: Directorship in a dormant company shall NOT be counted in the 20 company limit.</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#10b981"></div>
+          <div class="topic-title">Director Identification Number (DIN) & Removal</div>
+          <div class="topic-tag">Sec 153 · Sec 169</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="grid2">
+            <div class="pill">
+              <strong>DIN (Sec 153)</strong>
+              Every person to be appointed as director MUST have DIN. Apply in DIR-3 to Central Government. Only an individual can be director. No Body Corporate/Firm can be a director. One person = one DIN for lifetime.
+            </div>
+            <div class="pill">
+              <strong>Removal under Sec 169 (by shareholders)</strong>
+              1. Give special notice to company (before 14 days of meeting)<br>
+              2. Company sends copy to director concerned<br>
+              3. Director has right to be heard at meeting<br>
+              4. Pass Ordinary Resolution (simple majority)<br>
+              Note: Cannot remove directors appointed by Central Govt or by proportional representation.
+            </div>
+          </div>
+          <div class="sec-heading" style="font-size:10px">Vacation of Office (Sec 167)</div>
+          <ul class="points">
+            <li>Incurs disqualification under Sec 164</li>
+            <li>Absents from all Board Meetings for 12 months (with or without leave)</li>
+            <li>Fails to disclose interest in contracts</li>
+            <li>Convicted and sentenced to imprisonment ≥6 months (even if appeal filed)</li>
+            <li>Disqualified by order of court/tribunal</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#3b82f6"></div>
+          <div class="topic-title">Key Managerial Personnel (KMP)</div>
+          <div class="topic-tag">Sec 2(51) · Sec 203</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="def-box" style="border-color:#3b82f6; background:rgba(59,130,246,0.07)">
+            KMP = whole-time employees vested with most important roles/responsibilities; monitor and achieve goals targeted by Board.
+          </div>
+          <ul class="points">
+            <li>Managing Director OR CEO OR Manager</li>
+            <li>Company Secretary</li>
+            <li>Whole-time Director</li>
+            <li>Chief Financial Officer</li>
+            <li>Any officer not more than one level below directors in whole-time employment designated as KMP by Board</li>
+          </ul>
+          <div class="pill" style="margin-top:10px">
+            <strong>Applicability (Sec 203)</strong>
+            Mandatory for: Every Listed Company + Every other public company with paid-up capital ≥₹10 Cr + Every private company with paid-up capital ≥₹10 Cr (for Company Secretary).
+          </div>
+          <div class="tip-box">An individual cannot be both Chairman AND MD/CEO simultaneously — unless AOA provides otherwise OR company doesn't carry multiple businesses.</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#f59e0b"></div>
+          <div class="topic-title">Company Meetings — AGM, EGM & Requisites</div>
+          <div class="topic-tag">Sec 96–122 | Most Important</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="grid2">
+            <div class="pill">
+              <strong>Annual General Meeting (AGM) — Sec 96</strong>
+              Every company must hold AGM. First AGM: within 9 months of closing of first financial year. Subsequent AGMs: within 6 months of financial year end, and gap between 2 AGMs ≤15 months. During business hours (9am–6pm), on a non-holiday. In city/town of registered office.
+            </div>
+            <div class="pill">
+              <strong>Extraordinary General Meeting (EGM) — Sec 100</strong>
+              Any GM other than AGM. Called by Board on its own OR on requisition by members (at least 1/10th of paid-up share capital or 1/10th of members in companies without share capital). If Board fails to call within 21 days → members themselves can call within 3 months.
+            </div>
+          </div>
+          <div class="sec-heading" style="font-size:10px">Requisites of a Valid Meeting</div>
+          <ul class="points">
+            <li>Proper Authority — Board or requisitionists</li>
+            <li>Proper Notice — 21 clear days written notice; 20% members can accept shorter notice (AGM: 95%)</li>
+            <li>Quorum — Public co.: 5 members personally present (if ≤1000 members), 15 (1000–5000), 30 (&gt;5000). Private co.: 2 members personally present</li>
+            <li>Agenda — Notice must specify business (ordinary and special)</li>
+            <li>Chairman — presides over meeting</li>
+            <li>Minutes — must be maintained within 30 days of conclusion</li>
+          </ul>
+          <div class="grid2" style="margin-top:8px">
+            <div class="pill">
+              <strong>Ordinary Resolution</strong>
+              Votes in favour &gt; votes against (simple majority). For ordinary business at AGM.
+            </div>
+            <div class="pill">
+              <strong>Special Resolution</strong>
+              Votes in favour ≥ 3× votes against. Required for: altering MOA/AOA, voluntary winding up, change of registered office to another state. File copy with ROC within 30 days.
+            </div>
+          </div>
+          <div class="amend-box">Postal Ballot (Sec 110): Used for specific matters (e.g., change in object clause, buy-back, foreign investments). E-voting to be provided by listed companies for all matters. Video Conferencing: Directors can attend board meetings via VC — counts towards quorum.</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#8b5cf6"></div>
+          <div class="topic-title">Board Committees — Audit, NRC, SRC, CSR</div>
+          <div class="topic-tag">Sec 177–135</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="grid2">
+            <div class="pill">
+              <strong>Audit Committee (Sec 177)</strong>
+              Mandatory for: every listed public company + public co. paid-up capital ≥₹10 Cr + turnover ≥₹100 Cr + outstanding loans/borrowings/debentures/deposits ≥₹50 Cr. Minimum 3 directors, majority must be independent. Chairperson must be able to read financial statements. Functions: recommend auditor appointment, review financial statements, examine audit report, approve related party transactions, evaluate internal controls.
+            </div>
+            <div class="pill">
+              <strong>Nomination & Remuneration Committee (Sec 178)</strong>
+              Mandatory for same class as Audit Committee. Min 3 non-executive directors, majority independent. Functions: identify persons qualified to become directors/KMP, recommend to Board, formulate criteria for evaluation of directors, recommend remuneration policy. Policy to be placed on website; salient features in Board's report.
+            </div>
+            <div class="pill">
+              <strong>Stakeholders Relationship Committee (Sec 178)</strong>
+              Mandatory if company has &gt;1000 shareholders/debenture holders/deposit holders/other security holders. Chaired by non-executive director. Functions: resolve grievances of security holders (transfer, non-receipt of dividend, non-receipt of share certificates, etc.)
+            </div>
+            <div class="pill">
+              <strong>CSR Committee (Sec 135)</strong>
+              Applicable if: net worth ≥₹500 Cr OR turnover ≥₹1000 Cr OR net profit ≥₹5 Cr during any preceding FY. Min 3 directors, at least 1 independent. Must spend ≥2% of average net profits of preceding 3 years on CSR activities (Schedule VII). Functions: formulate CSR policy, recommend expenditure, monitor CSR activities. Amendment 2020: Unspent amount to be transferred to specified fund within 6 months of FY end.
+            </div>
+          </div>
+          <div class="amend-box">Amendment 2020 Sec 177/178: Penalty for contravention — Company: ₹5 lakhs; every defaulting officer: ₹1 lakh.</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#ec4899"></div>
+          <div class="topic-title">Insider Trading (SEBI Regulations 2015)</div>
+          <div class="topic-tag">Sec 3 Unit 3</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="def-box" style="border-color:#ec4899; background:rgba(236,72,153,0.07)">
+            Insider trading = trading or dealing in securities based on UPSI (Unpublished Price Sensitive Information). Objective: prohibit insiders from profiting from UPSI; ensure investor confidence in market.
+          </div>
+          <div class="grid2">
+            <div class="pill">
+              <strong>Who is an Insider?</strong>
+              Person in possession of/access to UPSI OR a Connected Person. Includes persons with contractual, fiduciary or employment relationship with company; also "deemed connected persons" — immediate relatives, holding/subsidiary companies, intermediaries, investment companies, AMCs, officials of stock exchange, mutual fund trustees.
+            </div>
+            <div class="pill">
+              <strong>UPSI (Unpublished Price Sensitive Information)</strong>
+              Financial results, dividends, change in capital structure, mergers/acquisitions/demergers, change in KMP, material litigation. Insider must not trade during "trading window closure" period.
+            </div>
+          </div>
+          <div class="def-box" style="border-color:#ef4444; background:rgba(239,68,68,0.07)">
+            <strong>Penalties:</strong> SEBI can impose fine of ₹25 Crore OR 3× profits made (whichever higher) (Sec 15G). Criminal: imprisonment up to 10 years (Sec 24, SEBI Act). Reputation risk.
+          </div>
+          <div class="amend-box">Amendment 2022: Regulations now apply to units of Mutual Funds. No insider can communicate/provide access to UPSI to ANY person including other insiders.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="u3-pyqs" class="section">
+      <div class="sec-heading">Unit 3 — Past Year Questions</div>
+      <div class="topic-card open">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#fbbf24"></div>
+          <div class="topic-title">⭐ Most Important Questions — Unit 3</div>
+          <div class="topic-tag">PYQs</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="pyq-section">
+            <div class="pyq-header">⭐ PYQ Bank — Unit 3: Management</div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">4M</div><div>Define 'Quorum'. State the statutory rules relating to the quorum required for a valid general meeting.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">4M</div><div>Outline the key provisions relating to Corporate Social Responsibility (CSR) and the functions of the CSR Committee.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3M</div><div>Explain the procedure for the removal of a director before the expiry of their term under Section 169 and removal by the Tribunal.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3M</div><div>Define and distinguish between Alternate, Additional, and Casual Vacancy directors, including related case studies.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2M</div><div>Under what circumstances is it necessary to hold an EGM, and who has authority to convene it?</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2M</div><div>Discuss in detail the requisites of a valid General Meeting and provisions relating to holding an AGM.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2M</div><div>Write a short note on the concept of 'Insider Trading'.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Briefly discuss the powers and functions of the Audit Committee.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>What is a Director Identification Number (DIN)?</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Write short notes on "Independent Director".</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>State the matters decided by postal ballot and discuss the procedure.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Write short notes on "Minutes of meetings".</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Write a short note on 'Class Action Litigation'.</div></div>
+          </div>
+          <div class="pyq-section" style="margin-top:10px; background:rgba(59,130,246,0.07); border-color:rgba(59,130,246,0.25)">
+            <div class="pyq-header" style="color:#60a5fa">📋 Case Study Questions</div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#60a5fa">★★</div><div class="pyq-marks" style="background:rgba(59,130,246,0.2);color:#60a5fa">CS</div><div><strong>Casual Vacancy:</strong> Mr. X was appointed as director for 5 years but died in car accident after 2 years. What is legal position of Mr. Y, whom the Board wishes to appoint to fill the casual vacancy?</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===== UNIT 4 ===== -->
+<div id="u4" class="unit-section">
+  <div class="sub-tabs">
+    <button class="tab active" onclick="switchTab('u4','notes',this)">📖 Notes</button>
+    <button class="tab" onclick="switchTab('u4','pyqs',this)">⭐ PYQs</button>
+  </div>
+  <main>
+    <div id="u4-notes" class="section active">
+      <div class="sec-heading">Unit 4 — Winding Up, Whistleblowing & CSR</div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#e8562a"></div>
+          <div class="topic-title">Winding Up — Concept & Modes (Sec 270)</div>
+          <div class="topic-tag">Compulsory + Voluntary</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="def-box" style="border-color:#e8562a; background:rgba(232,86,42,0.07)">
+            Winding up = the last stage of a company's existence where all assets are realized and used to pay off creditors, shareholders and other liabilities. The company ceases to exist after winding up.
+          </div>
+          <div class="vs-box">
+            <div class="vs-col" style="background:rgba(232,86,42,0.07); border:1px solid rgba(232,86,42,0.15)">
+              <strong style="color:#fb923c">Compulsory Winding Up (by Tribunal)</strong>
+              1. Unable to pay debts<br>
+              2. Company itself passes SR to wind up by Tribunal<br>
+              3. Acts against interest/integrity/security of India or spoils relations with foreign countries<br>
+              4. Not filed financial statements or annual returns for preceding 5 consecutive FYs<br>
+              5. Just and equitable grounds<br>
+              6. Fraudulent activities or unlawful business; guilty of fraud/misconduct in formation
+            </div>
+            <div class="vs-mid">VS</div>
+            <div class="vs-col" style="background:rgba(16,185,129,0.07); border:1px solid rgba(16,185,129,0.15)">
+              <strong style="color:#34d399">Voluntary Winding Up</strong>
+              Initiated by members or creditors without Court intervention.<br><br>
+              <strong>Members' Voluntary:</strong> Requires Declaration of Solvency. Company is solvent — can pay all debts within 3 years.<br><br>
+              <strong>Creditors' Voluntary:</strong> When company is insolvent. Creditors' meeting held within 14 days of members' meeting. Creditors appoint liquidator.
+            </div>
+          </div>
+          <div class="sec-heading" style="font-size:10px">Petition for Compulsory Winding Up (Sec 272)</div>
+          <ul class="points">
+            <li>Petition filed in Form 1/2/3 in 3 sets</li>
+            <li>Can be presented by: the company, creditors, contributories, Registrar, Central Govt, State Govt, or any person authorized by Central Govt</li>
+            <li>Company Liquidator appointed by Tribunal</li>
+          </ul>
+          <div class="tip-box">Just & Equitable grounds: Loss of substratum, deadlock in management, oppression of minority, fraudulent purpose. Key case for deadlock — Ebrahimi v. Westbourne Galleries [1973].</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#3b82f6"></div>
+          <div class="topic-title">Whistleblowing — Vigil Mechanism (Sec 177(9))</div>
+          <div class="topic-tag">Sec 177 · Key Topic</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="def-box" style="border-color:#3b82f6; background:rgba(59,130,246,0.07)">
+            Whistleblowing = calling attention of top management to wrongdoing within an organization. Origin: British policemen blowing whistles on observing crimes.
+          </div>
+          <div class="grid2">
+            <div class="pill">
+              <strong>Types of Whistleblowers</strong>
+              <strong>Internal:</strong> Employee, superior officer, or designated officer within the organization<br>
+              <strong>External:</strong> Lawyers, media, law enforcement, watchdog agencies — outside the organization
+            </div>
+            <div class="pill">
+              <strong>Objectives</strong>
+              • Encourage employees to report ethical/legal violations internally<br>
+              • Minimize exposure to damage from circumventing internal mechanisms<br>
+              • Show organization is serious about code of conduct
+            </div>
+          </div>
+          <div class="sec-heading" style="font-size:10px">Vigil Mechanism — Companies Act 2013 (Sec 177(9))</div>
+          <ul class="points">
+            <li>Mandatory for ALL listed companies</li>
+            <li>Companies accepting deposits from public</li>
+            <li>Companies borrowing from Banks/PFI in excess of ₹50 Crores</li>
+            <li>Must be operated through Audit Committee (or if conflict of interest, others on committee deal)</li>
+            <li>For other companies: Board nominates a director to play role of Audit Committee</li>
+            <li>Adequate safeguard against victimization of directors/employees using the mechanism</li>
+            <li>Direct access to Chairperson of Audit Committee in exceptional cases</li>
+            <li>Details must be disclosed on company website and in Board's Report</li>
+            <li>Repeated frivolous complaints: Audit Committee may take action including reprimand</li>
+          </ul>
+          <div class="def-box" style="border-color:#ef4444; background:rgba(239,68,68,0.07)">
+            <strong>Penalty:</strong> Company: minimum ₹1 lakh, extendable to ₹5 lakhs. Defaulting officer: imprisonment up to 1 year OR fine ₹25,000 to ₹1 lakh OR both.
+          </div>
+          <div class="tip-box">Vigil Mechanism under Listing Agreement (Clause 49) is NON-MANDATORY. Under Companies Act 2013 (Sec 177(9)) — MANDATORY for specified companies.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="u4-pyqs" class="section">
+      <div class="sec-heading">Unit 4 — Past Year Questions</div>
+      <div class="topic-card open">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#fbbf24"></div>
+          <div class="topic-title">⭐ Most Important Questions — Unit 4</div>
+          <div class="topic-tag">PYQs</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="pyq-section">
+            <div class="pyq-header">⭐ PYQ Bank — Unit 4: Winding Up</div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3M</div><div>Explain the concept and mechanism of 'Whistleblowing' as per the statutory framework.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2M</div><div>State the specific grounds under which a company can be compulsorily wound up by the NCLT.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Briefly outline the consequences of the voluntary winding up of a company.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Discuss the functions of the company liquidator under the compulsory winding-up process.</div></div>
+          </div>
+          <div class="pyq-section" style="margin-top:10px; background:rgba(59,130,246,0.07); border-color:rgba(59,130,246,0.25)">
+            <div class="pyq-header" style="color:#60a5fa">📋 Case Study Questions</div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#60a5fa">★★</div><div class="pyq-marks" style="background:rgba(59,130,246,0.2);color:#60a5fa">CS</div><div><strong>Statutory Minimum:</strong> Number of members in a public company reduced to 6. The company incurred trade debts over next 7 months. To what extent are the remaining 6 members liable for these debts?</div></div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#60a5fa">★★</div><div class="pyq-marks" style="background:rgba(59,130,246,0.2);color:#60a5fa">CS</div><div><strong>Just & Equitable:</strong> A private company has two shareholders with equal rights and management power. Company is profitable but complete deadlock in management. Can the company be wound up on this ground?</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===== UNIT 5 ===== -->
+<div id="u5" class="unit-section">
+  <div class="sub-tabs">
+    <button class="tab active" onclick="switchTab('u5','notes',this)">📖 Notes</button>
+    <button class="tab" onclick="switchTab('u5','pyqs',this)">⭐ PYQs</button>
+  </div>
+  <main>
+    <div id="u5-notes" class="section active">
+      <div class="sec-heading">Unit 5 — Prevention of Oppression & Mismanagement</div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#e8562a"></div>
+          <div class="topic-title">Oppression & Mismanagement — Meaning (Sec 241)</div>
+          <div class="topic-tag">Sec 241–245</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="grid2">
+            <div class="pill">
+              <strong>Oppression (Sec 241(1)(a))</strong>
+              Conduct of company's affairs in a manner prejudicial to public interest OR oppressive to any member/members OR prejudicial to the interests of the company. Key case: <em>Elder v. Elder & Watson (1952)</em> — oppression = burdensome, harsh, and wrongful conduct. Must be continuing course of conduct. Single act is generally NOT oppression.
+            </div>
+            <div class="pill">
+              <strong>Mismanagement (Sec 241(1)(b))</strong>
+              A material change has taken place OR is likely to take place in the management/control of the company (change in Board, manager, managing/whole-time director; acquisition of shares; change via insolvency/amalgamation) AND such change is/likely to be prejudicial to company or public interest.
+            </div>
+          </div>
+          <div class="sec-heading" style="font-size:10px">Who Can File Application (Sec 244)</div>
+          <ul class="points">
+            <li>Company with share capital: not less than 100 members OR 1/10th of total members OR members holding not less than 1/10th of issued share capital — whichever is less</li>
+            <li>Company without share capital: not less than 1/5th of total members</li>
+            <li>Central Government can also refer the matter</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#8b5cf6"></div>
+          <div class="topic-title">Powers of Tribunal (Sec 242) & Class Action (Sec 245)</div>
+          <div class="topic-tag">Relief · Remedies</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="grid2">
+            <div class="pill">
+              <strong>Powers of Tribunal (Sec 242)</strong>
+              • Regulation of conduct of affairs of company<br>
+              • Purchase of shares/interests by other members or company itself<br>
+              • Restriction of transfer of shares<br>
+              • Terminate/set aside/modify any agreement with MD/director/manager<br>
+              • Removal of MD/Director/Manager<br>
+              • Recovery of undue gains made by MD/Director/Manager<br>
+              • Winding up of company (if no other remedy adequate)
+            </div>
+            <div class="pill">
+              <strong>Class Action (Sec 245)</strong>
+              Filed by required number of members/depositors. Purpose: restrain company from ultra vires acts, breach of MOA/AOA, claim damages against company/directors/auditors for fraudulent/unlawful conduct, seek any remedy Tribunal deems fit.<br>
+              Tribunal: issues public notice, consolidates similar applications, appoints lead applicant.
+            </div>
+          </div>
+          <div class="tip-box">Amendment 2019 — Sec 242: Tribunal must record decision on whether respondent is a fit and proper person to hold office of director. If declared unfit: cannot hold directorship for 5 years from Tribunal's order.</div>
+          <div class="tip-box">Certified copy of Tribunal order must be filed with ROC within 30 days. Tribunal can also make interim orders.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="u5-pyqs" class="section">
+      <div class="sec-heading">Unit 5 — Past Year Questions</div>
+      <div class="topic-card open">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#fbbf24"></div>
+          <div class="topic-title">⭐ Most Important Questions — Unit 5</div>
+          <div class="topic-tag">PYQs</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="pyq-section">
+            <div class="pyq-header">⭐ PYQ Bank — Unit 5: Oppression & Mismanagement</div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3M</div><div>State the eligibility criteria regarding who can file an application before the Tribunal for relief against oppression and mismanagement.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★</div><div class="pyq-marks med">2M</div><div>Briefly discuss the powers vested in the Tribunal (NCLT) to prevent oppression and mismanagement.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Explain the term "oppression and mismanagement" under the Companies Act.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<!-- ===== UNIT 6 ===== -->
+<div id="u6" class="unit-section">
+  <div class="sub-tabs">
+    <button class="tab active" onclick="switchTab('u6','notes',this)">📖 Notes</button>
+    <button class="tab" onclick="switchTab('u6','pyqs',this)">⭐ PYQs</button>
+  </div>
+  <main>
+    <div id="u6-notes" class="section active">
+      <div class="sec-heading">Unit 6 — Insolvency & Bankruptcy Code, 2016</div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#e8562a"></div>
+          <div class="topic-title">Need for IBC, 2016 & Overall Scheme</div>
+          <div class="topic-tag">Background</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="def-box" style="border-color:#e8562a; background:rgba(232,86,42,0.07)">
+            The IBC, 2016 was enacted to modernize India's outdated bankruptcy laws. Previous laws were cumbersome — took several years to resolve. IBC provides a time-bound, efficient process to maximize asset value and improve recovery rates for creditors.
+          </div>
+          <div class="grid2">
+            <div class="pill">
+              <strong>Key Features of IBC</strong>
+              • Corporate Insolvency Resolution Process (CIRP)<br>
+              • Fast-track CIRP (for SMEs/low complexity cases)<br>
+              • Insolvency and Bankruptcy Board of India (IBBI) as regulator<br>
+              • Insolvency Professionals (IP) to manage affairs during CIRP<br>
+              • Committee of Creditors (CoC) with voting power<br>
+              • Priority-based distribution of proceeds
+            </div>
+            <div class="pill">
+              <strong>Key Stakeholders</strong>
+              • NCLT: Adjudicating Authority<br>
+              • NCLAT: Appellate Authority<br>
+              • IBBI: Regulator (registers IPs, enforces IBC)<br>
+              • IRP/RP: Manages company during CIRP<br>
+              • CoC: Committee of financial creditors (66% voting for plan approval)<br>
+              • Financial Creditors vs Operational Creditors
+            </div>
+          </div>
+          <div class="amend-box">IBC Amendment 2020 (COVID-19): Minimum threshold for filing application raised from ₹1 lakh to ₹1 crore (Proviso to Sec 4 — Central Govt notified on March 24, 2020). Protects businesses from frivolous insolvency filings during economic stress.</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#10b981"></div>
+          <div class="topic-title">Corporate Insolvency Resolution Process (CIRP)</div>
+          <div class="topic-tag">Most Important — Unit 6</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <p class="desc">CIRP is the main mechanism under IBC for resolution of corporate insolvency. It is time-bound — 180 days (extendable by 90 days, total max 270 days; post-2019 amendment: 330 days including litigation).</p>
+          <div class="sec-heading" style="font-size:10px">Step-by-Step CIRP Process</div>
+          <ul class="points">
+            <li><strong>Step 1 — Initiation:</strong> Financial creditor, operational creditor, or corporate debtor itself files application before NCLT. Default must be &gt;₹1 crore. NCLT within 14 days admits or rejects.</li>
+            <li><strong>Step 2 — Moratorium:</strong> Once admitted, NCLT declares moratorium. No legal proceedings against company/assets. Management handed over to IRP (Insolvency Resolution Professional).</li>
+            <li><strong>Step 3 — Appointment of IRP:</strong> NCLT appoints IRP. IRP takes over management, makes public announcement, collects claims from creditors.</li>
+            <li><strong>Step 4 — Verification of Claims:</strong> IRP verifies claims and prepares list of creditors (financial + operational).</li>
+            <li><strong>Step 5 — Formation of CoC:</strong> Committee of Creditors formed comprising financial creditors. Operational creditors' representative can attend but has no voting right unless aggregate debt &gt;10% of total.</li>
+            <li><strong>Step 6 — Formulation of Resolution Plan:</strong> IRP/RP invites resolution plans from interested parties (including promoters). Plan must be submitted within specified time.</li>
+            <li><strong>Step 7 — Approval of Plan:</strong> CoC evaluates and approves by at least 66% voting share of financial creditors. Plan then sent to NCLT for approval.</li>
+            <li><strong>Step 8 — Implementation OR Liquidation:</strong> If plan approved → implement. If not approved within timeline → company goes into liquidation. Liquidator distributes proceeds per IBC priority.</li>
+          </ul>
+          <div class="tip-box">Moratorium = No suits/proceedings against company; no transfer/disposal of assets; no foreclosure. Duration = from date of admission of application till completion of CIRP.</div>
+        </div>
+      </div>
+
+      <div class="topic-card">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#3b82f6"></div>
+          <div class="topic-title">Committee of Creditors (CoC) & Documentation</div>
+          <div class="topic-tag">Sec 21 IBC</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="grid2">
+            <div class="pill">
+              <strong>Committee of Creditors (CoC)</strong>
+              Comprises financial creditors. Functions: supervise IRP, monitor CIRP progress, protect creditors' interests, vote on key decisions (66% threshold to approve resolution plan), authorize sale of assets, appoint liquidator if plan fails, distribute proceeds per IBC priority.
+            </div>
+            <div class="pill">
+              <strong>Key Documents in CIRP</strong>
+              • Application for Insolvency Proceedings<br>
+              • Demand Notice (operational creditors)<br>
+              • Verification of Claims list<br>
+              • Insolvency Resolution Plan<br>
+              • Minutes of CoC/NCLT meetings<br>
+              • Progress/Status/Final Reports by IRP<br>
+              • Various Notices (CoC meetings, stakeholder meetings, NCLT hearings)
+            </div>
+          </div>
+          <div class="grid2" style="margin-top:8px">
+            <div class="pill">
+              <strong>Priority of Distribution in Liquidation</strong>
+              1. Insolvency resolution costs<br>
+              2. Secured creditors + workmen dues (24 months)<br>
+              3. Unsecured creditors<br>
+              4. Government dues<br>
+              5. Remaining debts and dues<br>
+              6. Preference shareholders<br>
+              7. Equity shareholders
+            </div>
+            <div class="pill">
+              <strong>Moratorium (Sec 14)</strong>
+              Declared upon admission of application by NCLT. Prohibits: institution of suits/proceedings; transfer/encumbrance of assets; recovery of property by owner/lessor; termination of supply of essential goods/services. Ends upon: completion of CIRP or commencement of liquidation.
+            </div>
+          </div>
+          <div class="amend-box">Fast-track CIRP: Available for small companies with low complexity; must be completed in shorter period.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="u6-pyqs" class="section">
+      <div class="sec-heading">Unit 6 — Past Year Questions</div>
+      <div class="topic-card open">
+        <div class="topic-header" onclick="toggle(this)">
+          <div class="topic-dot" style="background:#fbbf24"></div>
+          <div class="topic-title">⭐ Most Important Questions — Unit 6</div>
+          <div class="topic-tag">PYQs</div>
+          <div class="topic-chevron">▼</div>
+        </div>
+        <div class="topic-body">
+          <div class="pyq-section">
+            <div class="pyq-header">⭐ PYQ Bank — Unit 6: IBC 2016</div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3M</div><div>Discuss in detail the 'Corporate Insolvency Resolution Process' (CIRP) under the IBC, 2016. (Appears almost every exam.)</div></div>
+            <div class="pyq-item"><div class="pyq-star">★★★</div><div class="pyq-marks high">3M</div><div>State the primary objectives behind the enactment of the Insolvency and Bankruptcy Code (IBC), 2016.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Write a short note on the 'Committee of Creditors' in relation to the IBC.</div></div>
+            <div class="pyq-item"><div class="pyq-star">★</div><div class="pyq-marks low">1M</div><div>Write a short note on 'Moratorium' under the IBC.</div></div>
+          </div>
+          <div class="pyq-section" style="margin-top:10px; background:rgba(139,92,246,0.08); border-color:rgba(139,92,246,0.25)">
+            <div class="pyq-header" style="color:#c4b5fd">📋 Key Amendments to Remember</div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#c4b5fd">⚡</div><div class="pyq-marks" style="background:rgba(139,92,246,0.2);color:#c4b5fd">2020</div><div>COVID-19 Amendment: Minimum default threshold raised from ₹1 lakh to ₹1 crore (Proviso to Sec 4, notified 24 March 2020).</div></div>
+            <div class="pyq-item"><div class="pyq-star" style="color:#c4b5fd">⚡</div><div class="pyq-marks" style="background:rgba(139,92,246,0.2);color:#c4b5fd">2020</div><div>Pre-packaged Insolvency Resolution Process (PIRP) introduced for MSMEs — faster resolution with promoters retaining control if plan approved.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+</div><!-- /wrap -->
+
+<script>
+function switchUnit(id, btn) {
+  document.querySelectorAll('.unit-section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.unit-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+function switchTab(unit, tab, btn) {
+  const parent = document.getElementById(unit);
+  parent.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  parent.querySelectorAll('.tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(unit + '-' + tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+function toggle(header) {
+  const card = header.parentElement;
+  card.classList.toggle('open');
+}
+
+// Open first card in each unit by default
+document.querySelectorAll('.unit-section .topic-card:first-of-type').forEach(c => c.classList.add('open'));
+</script>
+</body>
+</html>
